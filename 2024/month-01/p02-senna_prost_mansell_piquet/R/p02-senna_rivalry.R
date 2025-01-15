@@ -5,35 +5,174 @@ library(ggimage)
 library(sysfonts)
 library(showtext)
 library(htmltools)
-library(patchwork)
+# library(patchwork)
+library(ggbump)
+library(MetBrewer)
+library(scales)
 
 # importing fonts
-font_add_google("roboto", "roboto")
-font_add_google("open sans", "open sans")
+font_add_google("Roboto Slab", family = "Roboto Slab")
+font_add_google("Roboto", family = "Roboto")
 font_add(family = "FontAwesomeBrands", regular = "C:/Users/Raymundo/Documentos/R/fontawesome-free-6.7.2-desktop/otfs/Font Awesome 6 Brands-Regular-400.otf")
 showtext_auto()
 
-# main dataframe
-df <- tibble::tribble(
-  ~year, ~team, ~model_car, ~pts, ~position,
-  1984, "Toleman", "Toleman TG184", 13, 9,
-  1985, "Lotus", "Lotus 97T", 38, 4,
-  1986, "Lotus", "Lotus 98T", 55, 4,
-  1987, "Lotus", "Lotus 99T", 57, 3,
-  1988, "McLaren", "McLaren MP44", 90, 1, 
-  1989, "McLaren", "McLaren MP45", 60, 2,
-  1990, "McLaren", "McLaren MP45B", 78, 1,
-  1991, "McLaren", "McLaren MP46", 96, 1,
-  1992, "McLaren", "McLaren MP47", 50, 4,
-  1993, "McLaren", "McLaren MP48", 73, 2,
-  1994, "Williams", "Williams FW16", 0, 0
+# dataset
+df_senna <- data.frame(
+  year = c(1984:1994),
+  points = c(13, 38, 55, 57, 90, 60, 78, 96, 50, 73, 0),
+  position = c(9, 4, 4, 3, 1, 2, 1, 1, 4, 2, 38))
+
+df_piquet <- data.frame(
+  year = c(1978:1991),
+  points = c(0, 3, 54, 50, 20, 59, 29, 21, 69, 73, 22, 12, 43, 26.5),
+  position = c(28, 16, 2, 1, 11, 1, 5, 8, 3, 1, 6, 8, 3, 6)
 )
 
+df_prost <- data.frame(
+  year = c(1980:1991, 1993),
+  points = c(5, 43, 34, 57, 71.5, 73, 72, 46, 87, 76, 71, 34, 99),
+  position = c(16, 5, 4, 2, 2, 1, 1, 4, 2, 1, 2, 5, 1)
+) 
+
+df_mansell <- data.frame(
+  year = c(1980:1992, 1994, 1995),
+  points = c(0, 8, 7, 10, 13, 31, 70, 61, 12, 38, 37, 72, 108, 13, 0),
+  position = c(30, 14, 14, 13, 10, 6, 2, 2, 9, 4, 5, 2, 1, 9, 29)
+)
+
+# Combine all data
+df <- bind_rows(
+  mutate(df_senna, driver = "Senna"),
+  mutate(df_piquet, driver = "Piquet"),
+  mutate(df_prost, driver = "Prost"),
+  mutate(df_mansell, driver = "Mansell")
+)
+
+# data for images bellow chart
+images <- data.frame(
+  driver = c("Prost", "Senna", "Piquet", "Mansell"),
+  name = c("Alain Prost", "Ayrton Senna", "Nelson Piquet", "Nigel Mansell"),
+  x_pos = c(1985, 1986.5, 1988, 1989.5),
+  color = c(pal_prost, pal_senna, pal_piquet, pal_mansell)) %>% 
+  mutate(path = paste0(
+    "2024/month-01/p02-senna_prost_mansell_piquet/images/",
+    str_replace_all(tolower(driver), " ", "_"),
+    ".png"
+  ))
+
+#custom labels for legend - include image + label - works with ggtext::element_markdown
+
+# Ordering drivers
+order = c("Prost", "Senna", "Piquet", "Mansell")
+
+df$driver = factor(df$driver, levels = order)
+
 # palette colors
-pal_bg <- '#F2F2F2'         # background color
-pal_text <- '#404040'       # text color
+pal_bg <- 'gray90'         # background color
+pal_text <- '#050200'       # text color
 pal_title <- '#FFD700'      # title color (gold)
-pal_senna <- "purple"       
+
+pal_senna <- "#fad02c"
+pal_prost <- '#f41823'
+pal_piquet <- '#0d733c'
+pal_mansell <- '#025492'
+
+# create caption with html tools to pass into plot.caption theme with ggtext::element_textbox_simple
+# must download font awesome brands locally to work: https://fontawesome.com/download
+caption <- tagList(
+  tags$span("Source: Wikipedia"),
+  tags$br(),
+  tags$span(HTML("&#xf099;"), style = 'color:#1DA1F2; font-family:"FontAwesomeBrands";'),
+  tags$span("@raymundoooooooo"),
+  tags$span(HTML("&#xf09b;"), style = 'color:#171515; font-family:"FontAwesomeBrands";'),
+  tags$span("raymz1990"),
+  tags$span(HTML("&#xf08c;"), style = 'color:#0077B5; font-family:"FontAwesomeBrands";'),
+  tags$span("raymundo_pilz")
+)
+
+
+
+ggplot(
+  data = df,
+  aes(x = year, y = position, group = driver)) +
+  geom_bump(linewidth = 0.6, color = "gray90") +
+  geom_bump(aes(color = driver), linewidth = 1,
+            data = ~.) +
+  geom_point(color = pal_bg, size = 3) +
+  geom_point(color = "gray90", size = 2) +
+  geom_point(aes(color = driver), size = 2,
+             data = ~.) + 
+  # geom_text(aes(label = driver), x = 1996, hjust = 0,
+  #           color = "black", size = 3.5,
+  #           data = df %>%
+  #             slice_max(year, by = driver)) +
+  scale_color_manual(values = c(pal_prost, pal_senna, pal_piquet, pal_mansell)) +
+  
+  #create new x axis labels
+  geom_text(mapping = aes(
+    x = year,
+    label = paste0("'", substr(year, 3, 4)),
+    y = -2
+  ),
+  color = pal_text,
+  size = 4,
+  # fontface = "bold",
+  vjust = 0.3) +
+  
+  
+  ## adjust into the scale y
+
+  scale_y_reverse(
+    limits = c(40, -10),
+                  breaks = c(1, 5, 10, 15, 20, 25, 30, 35), 
+                  expand = c(0.02, 0),
+                  labels = scales::number_format(suffix = ".")) +
+  scale_fill_manual(
+    values = c(pal_prost, pal_senna, pal_piquet, pal_mansell),
+    labels = c("Prost", "Senna", "Piquet", "Mansell"),
+    guide = guide_legend(nrow = 1, override.aes = list(fill = NA))
+
+  )+
+  
+  # custom legend
+  
+  ## images below chart
+  geom_image(
+    data = images, 
+    mapping = aes( y = - 8, x = x_pos, image=path), 
+    size = 0.1) +
+  
+  geom_richtext(
+    data = images,
+    mapping = aes( y= -4, x = x_pos, label = name),
+    fill = NA, label.color = NA, hjust = 0.4,
+    show.legend = FALSE, fontface = "bold") +
+  
+  # scale_color_identity() +
+  
+  
+  labs(fill = "Position", x = "", y = "Position",
+       title = "80's Year Rivalry",
+       subtitle = "A Prost vs Senna vs Piquet vs Mansell dispute over the years",
+       caption = caption) +
+  theme_void(base_family = "Roboto Condensed", base_size = 12) +
+  theme(
+    panel.background = element_rect(fill=pal_bg, color=NA),
+    plot.background = element_rect(fill=pal_bg),
+    panel.grid.minor = element_blank(), 
+    legend.position="none",
+    #     legend.title=element_blank(),
+    #     # legend.text=element_blank(),
+    #     legend.text = element_blank(),
+        text=element_text(family="Roboto Slab"),
+        plot.margin = margin(t=20, b=10, l=15, r=15),
+        # axis.title.x  = element_text(margin=margin(t=10), size=10),
+        axis.text.x = element_blank(),
+    axis.title.y = element_text(angle = 90),
+    axis.text.y = element_text(),
+        plot.title = element_text(face="bold", family="Roboto Slab"),
+        plot.caption = element_textbox_simple(size=8),
+        plot.subtitle = element_textbox_simple(margin=margin(b=10), size=12))
 
 # add colors to the dataframe
 
@@ -107,32 +246,6 @@ transparent <- function(img) {
   magick::image_fx(img, expression = "0.1*a", channel = "alpha") # if too dark images, change alpha to 0.5*a
 }
 
-# create caption with html tools to pass into plot.caption theme with ggtext::element_textbox_simple
-# must download font awesome brands locally to work: https://fontawesome.com/download
-caption <- tagList(
-  tags$span("Source: Wikipedia"),
-  tags$br(),
-  tags$span(HTML("&#xf099;"), style = 'color:#1DA1F2; font-family:"FontAwesomeBrands";'),
-  tags$span("@raymundoooooooo"),
-  tags$span(HTML("&#xf09b;"), style = 'color:#171515; font-family:"FontAwesomeBrands";'),
-  tags$span("raymz1990"),
-  tags$span(HTML("&#xf08c;"), style = 'color:#0077B5; font-family:"FontAwesomeBrands";'),
-  tags$span("raymundo_pilz")
-)
-
-# create caption text - used with ggtext::geom_textbox
-# caption <- paste0(
-#   "<span style='font-family:Roboto;padding-right:10px;'>Source: Wikipedia",
-#   "<span style = 'color:#ffffff;'>.....</span>",
-#   "<span style='font-family:fb;'>&#xf099;</span>",
-#   "<span style='font-family:Roboto;'>@raymundoooooooo</span>",
-#   "<span style = 'color:#ffffff;'>...</span>",
-#   "<span style='font-family:fb;'  >&#xf09b;</span>",
-#   "<span style='font-family:Roboto;'> raymz1990 </span>",
-#   "<span style='font-family:fb;'  >&#xf08c;</span>",
-#   "<span style='font-family:Roboto;'> raymundo_pilz </span>"
-# )
-
 # title for the plot (ggtext::element_textbox_simple)
 title <- '<span style="color:#000000;font-weight: bold;">THE </span>
           <span style="color:#FF1801;font-weight: bold;">FORMULA ONE </span>
@@ -146,6 +259,19 @@ df_legend <- data.frame(
   text = "World Champion",
   x_pos = 1984,
   y_pos = -45
+)
+
+# create caption with html tools to pass into plot.caption theme with ggtext::element_textbox_simple
+# must download font awesome brands locally to work: https://fontawesome.com/download
+caption <- tagList(
+  tags$span("Source: Wikipedia"),
+  tags$br(),
+  tags$span(HTML("&#xf099;"), style = 'color:#1DA1F2; font-family:"FontAwesomeBrands";'),
+  tags$span("@raymundoooooooo"),
+  tags$span(HTML("&#xf09b;"), style = 'color:#171515; font-family:"FontAwesomeBrands";'),
+  tags$span("raymz1990"),
+  tags$span(HTML("&#xf08c;"), style = 'color:#0077B5; font-family:"FontAwesomeBrands";'),
+  tags$span("raymundo_pilz")
 )
 
 # geom_image(
@@ -203,6 +329,7 @@ plot <-
     size = 0.05) +
     
   ## custom legend
+
   geom_image(
     data = df_legend,
     mapping = aes(x = x_pos, y = y_pos, image = image, color = pal_title),

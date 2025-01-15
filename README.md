@@ -15,6 +15,8 @@ The directories will include datasets and code files. Code files will include co
 ### Month 01: Formula 1
 
 - **[The Formula One Legacy of Ayrton Sena](./2024/month-01/p01-senna_carrer)**
+
 Inspired by Tanya Shapiro [Leo's girlfriend chart](https://github.com/tashapiro/tanya-data-viz/blob/main/dicaprio-gfs/dicaprio-gfs.R), visualization explores Ayrton Senna's career in Formula One. Each car image represents the corresponding season.
+
 The plot was created using `ggplot`, `ggtext` and `ggimage`.
 ![plot](./2024/month-01/p01-senna_carrer/plot/senna.png)
