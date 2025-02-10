@@ -33,10 +33,21 @@ This visualization explores the instense rivalry between four of the greatest Fo
 - **Nelson Piquet** (3-time World Champion)
 - **Nigel Mansell** (1-time World Champion)
 
-Inspired by [David Sjoberg](https://github.com/davidsjoberg/ggbump) and his `ggbump` charts examples, this projects analyses the performance trends of these legendary drivers across multiple seasons.
+Inspired by [David Sjoberg](https://github.com/davidsjoberg/ggbump) and his `ggbump` charts examples, this projects analyse the performance trends of these legendary drivers across multiple seasons.
 
 The plot was created using `ggplot`, `ggbump` and `ggimage`.
 
 ![Project 02 Visualization](./2024/month-01/p02-senna_prost_mansell_piquet/plot/80_rivalry.png)
+
+---
+
+### **[P03 - Formula One World Drivers' Champions](./2024/month-01/p03-drivers_champions)**
+
+This visualization explores all Formula 1 World Champions by season, from the first championship in 1950 to the present.
+
+Inspired by [Georgios Karamanis](https://github.com/gkaramanis/tidytuesday/blob/master/2020/2020-week15/plots/tour-de-france.png) `tidytuesday` challenge, this visualization represents the evolution of champions throughout F1 history.
+The plot was created using `ggplot`, `ggtext` and `ggimage`.
+
+![Project 02 Visualization](./2024/month-01/p03-drivers_champions/plot/drivers_champions20250209_210401.png)
 
 ---
