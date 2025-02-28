@@ -275,4 +275,3 @@ ggplot(data = tbl) +
 
 ggsave(here::here("2024", "month-01", "p03-drivers_champions", "plot",
                   paste0("drivers_champions", format(Sys.time(), "%Y%m%d_%H%M%S"), ".png")), dpi = 320, width = 11, height = 15)
-

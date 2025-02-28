@@ -69,7 +69,7 @@ images <- data.frame(
             to = 1994,
             length.out = 11)) %>% 
   mutate(path = paste0(
-    "month-01/p01-senna_carrer/images/",
+    "2025/month-01/p01-senna_carrer/images/",
     str_replace_all(tolower(name), " ", "_"),
     ".png"
   ))
@@ -117,7 +117,7 @@ caption <- tagList(
   tags$span(HTML("&#xf09b;"), style = 'color:#171515; font-family:"FontAwesomeBrands";'),
   tags$span("raymz1990"),
   tags$span(HTML("&#xf08c;"), style = 'color:#0077B5; font-family:"FontAwesomeBrands";'),
-  tags$span("raymundo_pilz")
+  tags$span("raymundopilz")
 )
 
 # create caption text - used with ggtext::geom_textbox
@@ -142,7 +142,7 @@ title <- '<span style="color:#000000;font-weight: bold;">THE </span>
 
 # data for custom legend
 df_legend <- data.frame(
-  image = "month-01/p01-senna_carrer/images/trophy.png",
+  image = "2025/month-01/p01-senna_carrer/images/trophy.png",
   text = "World Champion",
   x_pos = 1984,
   y_pos = -45
@@ -199,7 +199,7 @@ plot <-
   ## add trophy on champion bars
   geom_image(
     data = champion, 
-    mapping = aes(x = year, y = pts - 5, image = 'month-01/p01-senna_carrer/images/trophy.png', color = pal_title), 
+    mapping = aes(x = year, y = pts - 5, image = '2025/month-01/p01-senna_carrer/images/trophy.png', color = pal_title), 
     size = 0.05) +
     
   ## custom legend
