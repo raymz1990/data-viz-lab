@@ -128,7 +128,7 @@ tbl_points <- ggplot_build(p) %>%
   .$data %>% 
   .[[1]] %>% 
   filter(group > 8) %>%
-  filter(y < 1)
+  filter(y < 0.95)
 
 f1 <- "Montserrat"
 f1b <- "Montserrat"
@@ -149,7 +149,7 @@ setup_fonts()
 fonts <- get_font_families()
 
 
-p1 <- ggplot(data = tbl_points,
+ggplot(data = tbl_points,
              aes(x, y)) +
   
   geom_path(
@@ -176,7 +176,7 @@ p1 <- ggplot(data = tbl_points,
     family = f1b,
     angle = 90,
     hjust = 1,
-    nudge_y = -0.01,
+    nudge_y = 0.05,
     fontface = "bold",
     lineheight = 0.75) +
   
