@@ -1,3 +1,4 @@
+
 ## social_icons.R
 
 # Social media icons configuration
@@ -39,4 +40,3 @@ create_swd_caption <- function(subcaption, source_text) {
 #   year = 2025,
 #   month = "Jan",
 #   source_text = "Source: Scrapped from goodreads & librarthing"
-# )

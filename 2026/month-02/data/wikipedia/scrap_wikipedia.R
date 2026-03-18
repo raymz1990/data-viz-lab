@@ -137,6 +137,3 @@ tbl_constructor <- tbl
 # Setup environment ----
 # keeping only the main dataframe in the environment 
 # rm(list = setdiff(ls(), c("tbl_constructor", "tbl_drivers")))
-
-
-

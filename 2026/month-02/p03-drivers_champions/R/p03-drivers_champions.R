@@ -158,64 +158,64 @@ add_header <- function(x, y, label, hjust = 0, size = 3.5, family = font_body) {
 plot <- ggplot(tbl) +
   
   ## left year ----
-  geom_richtext(
-    aes(x = x_pos$year_left, y = n, label = Season),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$year_left, y = n, label = Season),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  family = font_body, size = 2.5
+) +
   
   ## right year ----
-  geom_richtext(
-    aes(x = x_pos$year_right, y = n, label = Season),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$year_right, y = n, label = Season),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  family = font_body, size = 2.5
+) +
   
   ## flags ----
-  geom_image(
-    aes(x = x_pos$winner_flag, y = n, image = flag),
-    size = 0.01
-  ) +
+geom_image(
+  aes(x = x_pos$winner_flag, y = n, image = flag),
+  size = 0.01
+) +
   
   ## driver ----
-  geom_richtext(
-    aes(x = x_pos$winner_name, y = n, label = Winner_Annot),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    hjust = 0, family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$winner_name, y = n, label = Winner_Annot),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  hjust = 0, family = font_body, size = 2.5
+) +
   
   ## team ----
-  geom_richtext(
-    aes(x = x_pos$team, y = n, label = Constructor),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    hjust = 0, family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$team, y = n, label = Constructor),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  hjust = 0, family = font_body, size = 2.5
+) +
   
   ## poles ----
-  geom_richtext(
-    aes(x = x_pos$poles, y = n, label = Poles),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    hjust = 0.5, family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$poles, y = n, label = Poles),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  hjust = 0.5, family = font_body, size = 2.5
+) +
   
   ## wins ----
-  geom_richtext(
-    aes(x = x_pos$wins, y = n, label = Wins),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    hjust = 0.5, family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$wins, y = n, label = Wins),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  hjust = 0.5, family = font_body, size = 2.5
+) +
   
   ## win rate area ----
-  geom_ribbon(
-    aes(
-      xmin = x_pos$win_rate,
-      xmax = x_pos$win_rate + `% Win` * 50,
-      y = n
-    ),
-    fill = pal_wins,
-    alpha = 0.9,
-    orientation = "y"
-  ) +
+geom_ribbon(
+  aes(
+    xmin = x_pos$win_rate,
+    xmax = x_pos$win_rate + `% Win` * 50,
+    y = n
+  ),
+  fill = pal_wins,
+  alpha = 0.9,
+  orientation = "y"
+) +
   geom_point(
     aes(x = x_pos$win_rate + `% Win` * 50, y = n),
     size = 0.55,
@@ -233,16 +233,16 @@ plot <- ggplot(tbl) +
   ) +
   
   ## total points area ----
-  geom_ribbon(
-    aes(
-      xmin = x_pos$points,
-      xmax = x_pos$points + Points * 7,
-      y = n
-    ),
-    fill = pal_points,
-    alpha = 0.9,
-    orientation = "y"
-  ) +
+geom_ribbon(
+  aes(
+    xmin = x_pos$points,
+    xmax = x_pos$points + Points * 7,
+    y = n
+  ),
+  fill = pal_points,
+  alpha = 0.9,
+  orientation = "y"
+) +
   geom_point(
     aes(x = x_pos$points + Points * 7, y = n),
     size = 0.55,
@@ -259,21 +259,21 @@ plot <- ggplot(tbl) +
   ) +
   
   ## constructor champion ----
-  geom_richtext(
-    aes(x = x_pos$constructor, y = n, label = Constructor_Champ),
-    fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
-    hjust = 0, family = font_body, size = 2.5
-  ) +
+geom_richtext(
+  aes(x = x_pos$constructor, y = n, label = Constructor_Champ),
+  fill = NA, label.color = NA, label.padding = unit(0.1, "lines"),
+  hjust = 0, family = font_body, size = 2.5
+) +
   
   ## structure lines ----
-  annotate(
-    "segment",
-    x = x_line$x,
-    xend = x_line$x,
-    y = -4, yend = nrow(tbl) + 1,
-    linewidth = 0.3,
-    color = pal_grid
-  ) +
+annotate(
+  "segment",
+  x = x_line$x,
+  xend = x_line$x,
+  y = -4, yend = nrow(tbl) + 1,
+  linewidth = 0.3,
+  color = pal_grid
+) +
   annotate(
     "segment",
     x = -2000, xend = 27000,
@@ -284,24 +284,24 @@ plot <- ggplot(tbl) +
   ) +
   
   ## headers ----
-  add_header(
-    x = x_head$x,
-    y = -2.5,
-    label = c("year", "driver", "team", "poles", "wins", "win %", "points", "constructor", "year"),
-    hjust = 0
-  ) +
+add_header(
+  x = x_head$x,
+  y = -2.5,
+  label = c("year", "driver", "team", "poles", "wins", "win %", "points", "constructor", "year"),
+  hjust = 0
+) +
   
   ## scales ----
-  annotate(
-    "text",
-    x = c(x_pos$win_rate - 100, 15800),
-    y = 0,
-    label = c("0", "100%"),
-    hjust = c(0, 1),
-    family = font_body,
-    size = 3,
-    color = pal_text
-  ) +
+annotate(
+  "text",
+  x = c(x_pos$win_rate - 100, 15800),
+  y = 0,
+  label = c("0", "100%"),
+  hjust = c(0, 1),
+  family = font_body,
+  size = 3,
+  color = pal_text
+) +
   annotate(
     "text",
     x = c(x_pos$points - 100, 21200),
@@ -314,20 +314,20 @@ plot <- ggplot(tbl) +
   ) +
   
   ## credits ----
-  # annotate(
-  #   "text",
-  #   x = -2000,
-  #   y = nrow(tbl) + 2.5,
-  #   label = "Source: Wikipedia",
-  #   hjust = 0,
-  #   family = font_body,
-  #   size = 2.2,
-  #   color = pal_text
-  # ) +
-  
-  
-  ## theme ----
-  coord_cartesian(clip = "off") +
+# annotate(
+#   "text",
+#   x = -2000,
+#   y = nrow(tbl) + 2.5,
+#   label = "Source: Wikipedia",
+#   hjust = 0,
+#   family = font_body,
+#   size = 2.2,
+#   color = pal_text
+# ) +
+
+
+## theme ----
+coord_cartesian(clip = "off") +
   scale_x_continuous(
     limits = c(-2300, 27300),
     expand = expansion(add = 1)
@@ -380,5 +380,3 @@ if (length(last_plot) > 0) {
   last_plot <- sort(last_plot) |> tail(1)
   file.rename(last_plot, file.path(plot_dir, "p03-drivers_champions.png"))
 }
-
-

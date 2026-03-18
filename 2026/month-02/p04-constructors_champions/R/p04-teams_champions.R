@@ -246,49 +246,49 @@ p_main <-
   ) +
   
   ### |- connecting branches ----
-  geom_path(
-    aes(group = group),
-    color = pal_text,
-    linewidth = 0.3
-  ) +
+geom_path(
+  aes(group = group),
+  color = pal_text,
+  linewidth = 0.3
+) +
   
   ### |- driver labels ----
-  shadowtext::geom_shadowtext(
-    data = node_labels %>% filter(is_driver),
-    aes(
-      x = x,
-      y = y,
-      label = label,
-      color = color
-    ),
-    family   = fonts$text,
-    size     = 3.5,
-    fontface = "bold",
-    angle    = 90,
-    hjust    = 0,
-    nudge_y  = 0.05,
-    bg.color = pal_bg
-  ) +
+shadowtext::geom_shadowtext(
+  data = node_labels %>% filter(is_driver),
+  aes(
+    x = x,
+    y = y,
+    label = label,
+    color = color
+  ),
+  family   = fonts$text,
+  size     = 3.5,
+  fontface = "bold",
+  angle    = 90,
+  hjust    = 0,
+  nudge_y  = 0.05,
+  bg.color = pal_bg
+) +
   
   ### |- constructor labels ----
-  geom_text(
-    data = node_labels %>% filter(is_constructor),
-    aes(
-      x = x,
-      y = y_constructor,
-      label = str_wrap(label, 10),
-      color = color
-    ),
-    family     = fonts$text,
-    size       = 4,
-    fontface   = "bold",
-    angle      = 90,
-    hjust      = 1,
-    lineheight = 0.75
-  ) +
+geom_text(
+  data = node_labels %>% filter(is_constructor),
+  aes(
+    x = x,
+    y = y_constructor,
+    label = str_wrap(label, 10),
+    color = color
+  ),
+  family     = fonts$text,
+  size       = 4,
+  fontface   = "bold",
+  angle      = 90,
+  hjust      = 1,
+  lineheight = 0.75
+) +
   
   ### |- scales and coordinates ----
-  scale_y_reverse() +
+scale_y_reverse() +
   scale_color_identity() +
   coord_radial(
     rotate.angle = TRUE,
@@ -299,13 +299,13 @@ p_main <-
   ) +
   
   ### |- labels ----
-  labs(
-    title    = title_text,
-    subtitle = subtitle_text
-  ) +
+labs(
+  title    = title_text,
+  subtitle = subtitle_text
+) +
   
   ### |- theme ----
-  theme_void() +
+theme_void() +
   theme(
     plot.background = element_rect(fill = pal_bg, colour = NA),
     plot.margin     = margin(t = 10, r = 60, b = 80, l = 60),
